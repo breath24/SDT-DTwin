@@ -47,6 +47,16 @@ Notes:
 - Supported PROVIDER values: `google`, `openai`, `anthropic`, `openrouter`.
 - You must provide the matching API key for the selected provider.
 
+### Github Token
+Visit https://github.com/settings/personal-access-tokens and generate a new token
+ - give it a name
+ - give it access to either all repositories or select specific repositories
+ - add the following repository permissions:
+    - contents
+    - issues
+    - pull requests
+    - discussions
+
 ### Install
 
 ```bash
@@ -55,6 +65,11 @@ python -m venv .venv
 . .venv/Scripts/Activate.ps1
 pip install -r requirements.txt
 ```
+
+### Recommendations
+- For AI Models, use a smart model that is good at tool use and coding like claude sonnet 4, gemini 2.5 pro, and potentially gpt-5 etc, performance highly depends on the model
+- Install ripgrep for faster search/listing, default search is slow
+- Try out the standard run with a small repo first by providing the REPO_URL in the env file and running `python -m src.main`
 
 ### Usage
 
