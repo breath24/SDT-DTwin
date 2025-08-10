@@ -42,7 +42,12 @@ def _kill_process_tree(process: subprocess.Popen) -> None:
                 pass
 
 
-def run_shell(command: str, cwd: Optional[str] = None, timeout: Optional[int] = None) -> Tuple[int, str, str]:
+def run_shell(
+    command: str,
+    cwd: Optional[str] = None,
+    timeout: Optional[int] = None,
+    stdin: Optional[str] = None,
+) -> Tuple[int, str, str]:
     # Force UTF-8 decoding with replacement to avoid Windows cp1252 decode crashes
     popen_kwargs = dict(
         cwd=cwd,
@@ -53,6 +58,8 @@ def run_shell(command: str, cwd: Optional[str] = None, timeout: Optional[int] = 
         encoding="utf-8",
         errors="replace",
     )
+    if stdin is not None:
+        popen_kwargs["stdin"] = subprocess.PIPE
     # Start in a separate process group/session so we can kill the whole tree on timeout
     if os.name == "nt":
         popen_kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP  # type: ignore[attr-defined]
@@ -60,11 +67,12 @@ def run_shell(command: str, cwd: Optional[str] = None, timeout: Optional[int] = 
         popen_kwargs["preexec_fn"] = os.setsid  # type: ignore[assignment]
 
     process = subprocess.Popen(command, **popen_kwargs)
-    timed_out = False
     try:
-        stdout, stderr = process.communicate(timeout=timeout)
+        if stdin is not None:
+            stdout, stderr = process.communicate(input=stdin, timeout=timeout)
+        else:
+            stdout, stderr = process.communicate(timeout=timeout)
     except subprocess.TimeoutExpired:
-        timed_out = True
         _kill_process_tree(process)
         stdout, stderr = process.communicate()
         stderr = (stderr or "") + "\n[KILLED AFTER TIMEOUT]"

@@ -1,12 +1,10 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 from git import Repo
 from ..utils.git_url import with_token, to_https_url
 from ..utils.fs_extra import force_rmtree
-import shutil
 import subprocess
 import os
 

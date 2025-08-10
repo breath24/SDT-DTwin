@@ -1,0 +1,137 @@
+{
+  "agents": {
+    "unified": {
+      "max_steps": 200,
+      "max_history_chars": null,
+      "tools": {
+        "read_file": {
+          "enabled": true,
+          "description": "(path, line_start?, line_end?): Read file contents; optional 1-based inclusive line range"
+        },
+        "write_file": {
+          "enabled": true,
+          "description": "(path, content): Write file contents"
+        },
+        "list_dir": {
+          "enabled": true,
+          "description": "(path): List directory contents"
+        },
+        "search": {
+          "enabled": true,
+          "description": "(pattern, path): Search for text patterns in files"
+        },
+        "apply_patch": {
+          "enabled": true,
+          "description": "(patch_string): Apply code changes using patch format above"
+        },
+        "replace_in_file": {
+          "enabled": false,
+          "description": "(path, pattern, replacement, flags=\"\", count=1): Replace text in file"
+        },
+        "replace_region": {
+          "enabled": false,
+          "description": "(path, start_pattern, end_pattern, replacement, flags=\"s\", include_markers=True): Replace text in region"
+        },
+        "lint": {
+          "enabled": true,
+          "description": "(path): Lint a file"
+        },
+        "plan_read": {
+          "enabled": false,
+          "description": "(): Read the current plan JSON"
+        },
+        "plan_update": {
+          "enabled": true,
+          "description": "(steps=[], mark_completed=[], mark_in_progress=\"\"): Manage plan (mark_completed MUST be a list: [\"step_id\"])"
+        },
+        "notes_read": {
+          "enabled": false,
+          "description": "(): Read notes from .devtwin_notes.jsonl"
+        },
+        "note_write": {
+          "enabled": false,
+          "description": "(topic, content): Write a note to .devtwin_notes.jsonl"
+        },
+        "shell": {
+          "enabled": true,
+          "description": "(command, timeout?, stdin?, stream=false): Run shell command (non-interactive by default; prefer --yes/-y; stdin and stream supported; timeout in seconds, capped at 600)"
+        },
+        "debug_env": {
+          "enabled": false,
+          "description": "(): Show working directory and file structure (for debugging)"
+        },
+        "finalize": {
+          "enabled": true,
+          "description": "(commit_message, done=True): Mark work complete with commit message"
+        }
+      }
+    },
+    "analysis": {
+      "max_steps": 20,
+      "max_history_chars": null
+    },
+    "setup": {
+      "max_steps": 20,
+      "max_history_chars": null
+    },
+    "planner": {
+      "max_steps": 40,
+      "max_history_chars": null
+    },
+    "coder": {
+      "max_steps": 200,
+      "max_history_chars": null
+    }
+  },
+  "timeouts": {
+    "default_shell_timeout": 60,
+    "max_shell_timeout": 600,
+    "test_timeout": 120
+  },
+  "limits": {
+    "default_tool_result_chars": 4000,
+    "max_history_chars": 100000,
+    "keep_last_messages": 100,
+    "max_loops": 8,
+    "max_stuck_ratio": 0.6,
+    "max_todo_count": 10,
+    "max_not_implemented_count": 3
+  },
+  "providers": {
+    "default": "google",
+    "default_model": "gemini-2.0-flash",
+    "openrouter_base_url": "https://openrouter.ai/api/v1",
+    "supported": ["google", "openai", "anthropic", "openrouter"],
+    "models": {
+      "google": "gemini-2.0-flash",
+      "openai": "gpt-4",
+      "anthropic": "claude-3-5-sonnet-20241022",
+      "openrouter": "meta-llama/llama-3.1-405b-instruct"
+    }
+  },
+  "docker": {
+    "workspace_dir": "/workspace",
+    "sleep_cmd": "sleep infinity"
+  },
+  "git": {
+    "default_branch": "main",
+    "commit_message_prefix": "dev-twin"
+  },
+  "paths": {
+    "default_workdir": ".devtwin_work",
+    "artifacts_dir_name": "artifacts",
+    "notes_file": ".devtwin_notes.jsonl",
+    "notes_md_file": "notes.md"
+  },
+  "testing": {
+    "pytest_verbose_args": ["-vv", "-x", "-s", "--maxfail=1"],
+    "pytest_quiet_args": ["-q"],
+    "test_directories": ["tests", "test", "__tests__"]
+  },
+  "file_types": {
+    "python_extensions": [".py"],
+    "javascript_extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "config_files": ["package.json", "pyproject.toml", "requirements.txt", "go.mod", "Cargo.toml", "pom.xml", "build.gradle", "Dockerfile", "Makefile"],
+    "docs_files": ["README.md", "README.rst", "docs/", "documentation/"]
+  }
+}

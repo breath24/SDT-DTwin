@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from .error_handling import validate_required_config
 
 
 @dataclass
@@ -51,28 +52,7 @@ class Settings:
         return self.get_api_key_for_provider(self.provider)
 
     def ensure(self) -> None:
-        if not self.github_token:
-            raise ValueError("GITHUB_TOKEN is required")
-        if not self.repo_url:
-            raise ValueError("REPO_URL is required")
-        
-        # Validate provider
-        valid_providers = ["google", "openai", "anthropic", "openrouter"]
-        if self.provider not in valid_providers:
-            raise ValueError(f"PROVIDER must be one of: {', '.join(valid_providers)}")
-        
-        # Check if we have the required API key for the selected provider
-        required_key = self.get_current_api_key()
-        if not required_key:
-            if self.provider == "google":
-                raise ValueError("GOOGLE_API_KEY is required when PROVIDER=google")
-            elif self.provider == "openai":
-                raise ValueError("OPENAI_API_KEY is required when PROVIDER=openai")
-            elif self.provider == "anthropic":
-                raise ValueError("ANTHROPIC_API_KEY is required when PROVIDER=anthropic")
-            elif self.provider == "openrouter":
-                raise ValueError("OPENROUTER_API_KEY is required when PROVIDER=openrouter")
-        
+        validate_required_config(self)
         self.workdir.mkdir(parents=True, exist_ok=True)
 
 

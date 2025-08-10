@@ -1,0 +1,104 @@
+{
+  "_comment": "Example configuration with customized settings",
+  "agents": {
+    "unified": {
+      "max_steps": 300,
+      "max_history_chars": 150000,
+      "keep_last_messages": 50,
+      "tools": {
+        "read_file": {
+          "enabled": true,
+          "description": "(path, line_start?, line_end?): Read file contents; optional 1-based inclusive line range"
+        },
+        "write_file": {
+          "enabled": true,
+          "description": "(path, content): Write file contents"
+        },
+        "list_dir": {
+          "enabled": true,
+          "description": "(path): List directory contents"
+        },
+        "search": {
+          "enabled": true,
+          "description": "(pattern, path): Search for text patterns in files"
+        },
+        "apply_patch": {
+          "enabled": true,
+          "description": "(patch_string): Apply code changes using patch format above"
+        },
+        "replace_in_file": {
+          "enabled": false,
+          "description": "(path, pattern, replacement, flags=\"\", count=1): Replace text in file"
+        },
+        "replace_region": {
+          "enabled": false,
+          "description": "(path, start_pattern, end_pattern, replacement, flags=\"s\", include_markers=True): Replace text in region"
+        },
+        "lint": {
+          "enabled": true,
+          "description": "(path): Lint a file"
+        },
+        "plan_read": {
+          "enabled": false,
+          "description": "(): Read the current plan JSON"
+        },
+        "plan_update": {
+          "enabled": true,
+          "description": "(steps=[], mark_completed=[], mark_in_progress=\"\"): Manage plan (mark_completed MUST be a list: [\"step_id\"])"
+        },
+        "notes_read": {
+          "enabled": false,
+          "description": "(): Read notes from .devtwin_notes.jsonl"
+        },
+        "note_write": {
+          "enabled": false,
+          "description": "(topic, content): Write a note to .devtwin_notes.jsonl"
+        },
+        "shell": {
+          "enabled": true,
+          "description": "(command, timeout?, stdin?, stream=false): Run shell command (non-interactive by default; prefer --yes/-y; stdin and stream supported; timeout in seconds, capped at 600)"
+        },
+        "debug_env": {
+          "enabled": false,
+          "description": "(): Show working directory and file structure (for debugging)"
+        },
+        "finalize": {
+          "enabled": true,
+          "description": "(commit_message, done=True): Mark work complete with commit message"
+        }
+      }
+    },
+    "analysis": {
+      "max_steps": 30,
+      "max_history_chars": 80000
+    },
+    "setup": {
+      "max_steps": 25,
+      "max_history_chars": 40000
+    },
+    "planner": {
+      "max_steps": 50,
+      "max_history_chars": 40000
+    },
+    "coder": {
+      "max_steps": 250,
+      "max_history_chars": 150000,
+      "keep_last_messages": -1,
+      "_comment": "keep_last_messages: -1 means unlimited messages, limited only by max_history_chars"
+    }
+  },
+  "timeouts": {
+    "default_shell_timeout": 90,
+    "max_shell_timeout": 900,
+    "test_timeout": 180
+  },
+  "limits": {
+    "default_tool_result_chars": 6000,
+    "max_history_chars": 150000,
+    "keep_last_messages": 50,
+    "max_loops": 12,
+    "max_stuck_ratio": 0.5,
+    "max_todo_count": 15,
+    "max_not_implemented_count": 5
+  }
+}
