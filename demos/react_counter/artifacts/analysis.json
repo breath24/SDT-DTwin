@@ -1,0 +1,14 @@
+{
+  "project_type": "React",
+  "build_commands": [
+    "npm install",
+    "npm run build"
+  ],
+  "test_commands": [],
+  "run_commands": [
+    "npm run dev",
+    "npm run preview"
+  ],
+  "package_manager": "npm",
+  "dockerfile_suggested": "FROM node:18-alpine\n\nWORKDIR /app\n\nCOPY package*.json ./\n\nRUN npm install\n\nCOPY . .\n\nRUN npm run build\n\nEXPOSE 3000\n\nCMD [\"npm\", \"run\", \"preview\"]"
+}

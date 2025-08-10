@@ -1,0 +1,52 @@
+{
+  "name": "advanced-cli-tool",
+  "version": "1.0.0",
+  "description": "Advanced command-line tool with comprehensive features",
+  "main": "index.js",
+  "bin": {
+    "cli": "./index.js"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "commander": "^10.0.0",
+    "inquirer": "^9.1.0",
+    "chalk": "^4.1.2",
+    "ora": "^5.4.1",
+    "cli-table3": "^0.6.3",
+    "figlet": "^1.5.2",
+    "fs-extra": "^11.1.0",
+    "glob": "^8.1.0",
+    "yaml": "^2.2.1",
+    "archiver": "^5.3.1",
+    "chokidar": "^3.5.3",
+    "dotenv": "^16.0.3",
+    "joi": "^17.8.3",
+    "clipboardy": "^3.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "eslint": "^8.35.0",
+    "nodemon": "^2.0.20",
+    "@types/node": "^18.15.0"
+  },
+  "keywords": [
+    "cli",
+    "command-line",
+    "tool",
+    "generator",
+    "scaffold",
+    "automation"
+  ],
+  "author": "Developer Twin",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "status": "success",
+  "commit_message": "Add reset button to React counter and update README",
+  "demo": "react_counter"
+}

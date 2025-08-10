@@ -1,0 +1,12 @@
+[
+  {"name": "Alice Johnson", "age": 30, "city": "New York", "salary": 75000, "department": "Engineering"},
+  {"name": "Bob Smith", "age": 25, "city": "Boston", "salary": 65000, "department": "Marketing"},
+  {"name": "Charlie Brown", "age": 35, "city": "New York", "salary": 85000, "department": "Engineering"},
+  {"name": "Diana Prince", "age": 28, "city": "Boston", "salary": 70000, "department": "Sales"},
+  {"name": "Eve Adams", "age": 32, "city": "Chicago", "salary": 80000, "department": "Engineering"},
+  {"name": "Frank Miller", "age": 29, "city": "Chicago", "salary": 72000, "department": "Marketing"},
+  {"name": "Grace Lee", "age": 31, "city": "New York", "salary": 78000, "department": "Sales"},
+  {"name": "Henry Wilson", "age": 26, "city": "Boston", "salary": 68000, "department": "Engineering"},
+  {"name": "Ivy Chen", "age": 33, "city": "Chicago", "salary": 82000, "department": "Engineering"},
+  {"name": "Jack Davis", "age": 27, "city": "Boston", "salary": 69000, "department": "Marketing"}
+]
