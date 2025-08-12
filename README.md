@@ -8,11 +8,50 @@ Automated agent developer that:
 - Opens a Pull Request when done
 
 ### Requirements
-
 - Python 3.10+
 - Git on PATH
 - Optional: Docker (for containerized runs)
 - Optional: ripgrep (`rg`) for faster search/listing
+
+
+## Walthrough
+### Requirements
+1. Install git (if not already installed)
+2. Install python 3.10+ (if not already installed)
+3. Install ripgrep (if not already installed)
+
+### Fill out .env
+1. Copy `env.example` to `.env`
+2. Fill out the values in `.env` depending on the model you want to use
+- [Check Model setup examples](#model-setup-examples) at the end of the README for more information
+- [Check Model and performance recommendations](#model-and-performance-recommendations) to see which model is best for you
+3. If you want to run the agent on your own GitHub repository, you need to provide a Github token and the repository URL, follow the next steps:
+
+### Github Setup
+1. Follow the [Github Token Setup instructions](#github-token) to get your Github token
+2. Add your token and the repository URL to the `.env` file
+
+### Setup
+1. Run `python -m venv .venv`
+2. Run `. .venv/Scripts/Activate.ps1` (Windows) or `source .venv/bin/activate` (Linux/Mac)
+3. Run `pip install -r requirements.txt`
+
+### Running the agent
+#### Run on your own repository
+- Run `python -m src.runner main`
+- To run against a specific issue, use `python -m src.runner main --issue N`
+  
+#### Running demos
+- Recommended to just use gemini-2.0-flash for demos, it is fast and inexpensive or even free
+- Run `python -m src.runner demo run --bench` to run against all demos
+- To run against a specific demo, use `python -m src.runner demo run --name <demo_name>` (demos are located in `demos/`)
+
+#### Running benchmark
+- Run `python -m src.runner bench run`
+- To only do a limited number of runs, use `python -m src.runner bench run --limit <limit>`
+- To skip a specific number of issues, use `python -m src.runner bench run --skip-n <skip_n>`
+- To skip a specific repository, use `python -m src.runner bench run --skip-repo <skip_repo>`
+- You can also combine these options to skip a repo/number and limit the number of runs, for example: `python -m src.runner bench run --skip-repo astropy/astropy --limit 10`
 
 ### Environment
 
@@ -83,8 +122,8 @@ Additional tips:
 - Multi‑agent graph: orchestrates distinct phases via LangGraph: `analysis → setup → planner → coder → test_lint` and iterates between `coder` and `test_lint` until done.
 
 Choose via CLI:
-- Unified (default): `python -m src.runner`
-- Multi‑agent: `python -m src.runner --multi-agent`
+- Unified (default): `python -m src.runner main`
+- Multi‑agent: `python -m src.runner main --multi-agent`
 - Demos unified: `python -m src.runner demo run`
 - Demos multi‑agent: `python -m src.runner demo run --multi-agent`
 - Bench unified: `python -m src.runner bench run`
@@ -94,7 +133,7 @@ Choose via CLI:
 
 - **Standard run**:
   ```bash
-  python -m src.runner
+  python -m src.runner main
   ```
   - **--issue N**: target a specific issue number
   - **--workdir PATH**: override workspace root (default: `.devtwin_work`)
@@ -156,13 +195,14 @@ python -m src.runner bench run \
 Key options:
 - **--subset**: HF dataset path (default `princeton-nlp/SWE-bench_Lite`)
 - **--split**: dataset split (default `test`)
-- **--limit**: cap number of examples
-- **--skip_completed**: skip examples with existing `summary.json`
+- **--limit**: cap number of issues
+- **--skip_completed**: skip issues with existing `summary.json`
+- **--skip_n**: skip the first N issues in the split
 - **--skip_repo**: substring to exclude certain repos
 - **--only_type**: `fail`, `pass`, or `all` (default `fail`)
 - **--apply_test_patch**: apply provided failing tests (default `True`)
 - **--test_timeout**: seconds per test run (default `120`)
-- **--docker**: use analysis-suggested Docker image per example
+- **--docker**: use analysis-suggested Docker image per issue
 
 ### Outputs (artifacts)
 
