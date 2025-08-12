@@ -7,6 +7,8 @@ Automated agent developer that:
 - Plans and implements changes in a loop using tools (shell, file read/write, search, notes)
 - Opens a Pull Request when done
 
+---
+
 ### Requirements
 - Python 3.10+
 - Git on PATH
@@ -53,6 +55,8 @@ Automated agent developer that:
 - To skip a specific repository, use `python -m src.runner bench run --skip-repo <skip_repo>`
 - You can also combine these options to skip a repo/number and limit the number of runs, for example: `python -m src.runner bench run --skip-repo astropy/astropy --limit 10`
 
+---
+
 ### Environment
 
 Create a `.env` from `env.example`:
@@ -86,6 +90,8 @@ Notes:
 - Supported PROVIDER values: `google`, `openai`, `anthropic`, `openrouter`.
 - You must provide the matching API key for the selected provider.
 
+---
+
 ### Github Token
 Visit https://github.com/settings/personal-access-tokens and generate a new token
  - give it a name
@@ -96,6 +102,8 @@ Visit https://github.com/settings/personal-access-tokens and generate a new toke
     - pull requests
     - discussions
 
+---
+
 ### Install
 
 ```bash
@@ -104,6 +112,8 @@ python -m venv .venv
 . .venv/Scripts/Activate.ps1
 pip install -r requirements.txt
 ```
+
+---
 
 ### Model and performance recommendations
 - Best overall (recommended): Claude Sonnet 4 via OpenRouter
@@ -117,6 +127,8 @@ Additional tips:
 - Install ripgrep for faster search/listing; the fallback search is slower
 - Start with a small repo; set `REPO_URL` in `.env` and run `python -m src.runner`
 
+---
+
 ### Multi-agent vs unified
 - Unified agent (default): a single agent with tools that plans and executes end‑to‑end. It uses `plan_update` to refine and update its plan continuously during the run.
 - Multi‑agent graph: orchestrates distinct phases via LangGraph: `analysis → setup → planner → coder → test_lint` and iterates between `coder` and `test_lint` until done.
@@ -128,6 +140,8 @@ Choose via CLI:
 - Demos multi‑agent: `python -m src.runner demo run --multi-agent`
 - Bench unified: `python -m src.runner bench run`
 - Bench multi‑agent: `python -m src.runner bench run --multi-agent`
+
+---
 
 ### Usage
 
@@ -142,6 +156,8 @@ Choose via CLI:
   - **--config-file PATH** and repeated `--config key=value`: customize runtime settings
 
 - **Behavior when env is incomplete**: falls back to a local dry-run using a sample repo; no GitHub/PR is created.
+
+---
 
 ### Demo mode
 
@@ -165,6 +181,8 @@ python -m src.runner demo run --bench
 
 Artifacts are written under `<WORKDIR>/demos/<name>/artifacts/`.
 
+---
+
 ### Configuration knobs
 
 Configs live in `config/default.json` (see `config/README.md`). You can provide a custom file with `--config-file` and/or override values with repeated `--config key=value` flags.
@@ -179,6 +197,8 @@ python -m src.runner \
   --config limits.max_history_chars=150000 \
   --config limits.keep_last_messages=120
 ```
+
+---
 
 ### Benchmark mode (SWE-bench Lite)
 
@@ -204,6 +224,8 @@ Key options:
 - **--test_timeout**: seconds per test run (default `120`)
 - **--docker**: use analysis-suggested Docker image per issue
 
+---
+
 ### Outputs (artifacts)
 
 For each run, artifacts are saved under `<WORKDIR>/<owner__repo>/issue-<n>/artifacts/` (or demo/bench equivalents):
@@ -219,6 +241,8 @@ For each run, artifacts are saved under `<WORKDIR>/<owner__repo>/issue-<n>/artif
 Interpreting results:
 - Even if a run ends as "incomplete", the agent may have implemented changes but could not fully resolve tests, environment, or validation. Review `artifacts/` (plan, transcript, events) and the repo diff to assess implemented work.
 
+---
+
 ### How it works
 
 - Orchestrated via a LangGraph state machine:
@@ -229,9 +253,13 @@ Interpreting results:
  - `coder`: performs incremental edits using tools (read/write/search/shell/notes) and finalizes with a commit message.
  - In the unified flow, the agent maintains a single loop and updates its plan continuously via `plan_update` as it discovers new information.
 
+---
+
 ### Generated Dockerfile
 
 When applicable, a simple Dockerfile is proposed based on detected stack (Node/Python, etc.) and includes `ripgrep`.
+
+---
 
 ### Safety & Notes
 
@@ -239,12 +267,16 @@ When applicable, a simple Dockerfile is proposed based on detected stack (Node/P
 - Creates a feature branch and opens a PR via GitHub API using `GITHUB_TOKEN` (requires `repo` scope).
 - Tool usage and model outputs are constrained via strict JSON schemas.
 
+---
+
 ### Troubleshooting
 
 - Ensure `git` is on PATH and `GITHUB_TOKEN` has `repo` scope.
 - Choose a valid `PROVIDER` and provide the corresponding API key.
 - On Windows, prefer `python -m pytest` and `where` (the system does this automatically where relevant).
 - Install `ripgrep` for best performance; the fallback search is slower.
+
+---
 
 ### Model setup examples
 
